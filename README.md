@@ -60,3 +60,7 @@ SSE is:
 - The backend gets a streaming response from TinyLLaMA.
 - It sends each token to the frontend using SSE.
 - The browser shows the tokens as they arrive, creating a smooth typing effect.
+
+## UI
+
+![alt text](https://github.com/dedihartono801/LlamaTalks/blob/master/ui.png)
