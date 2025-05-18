@@ -1,9 +1,8 @@
-## Description
-
 ## Architecture Diagram
 
 ![alt text](https://github.com/dedihartono801/LlamaTalks/blob/master/simple-architecture-AI-BE.png)
 
+## Description
 
 # 🦙 tinyllama-stream-chat
 
