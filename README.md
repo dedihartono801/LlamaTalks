@@ -15,6 +15,17 @@ This repository demonstrates a full integration of a simple AI chatbot using:
 
 ---
 
+## 🚀 How to Install TinyLLaMA using OLLAMA
+- brew install ollama
+## To start ollama:
+- brew services start ollama
+## Or, if you don't want/need a background service you can just run:
+- /opt/homebrew/opt/ollama/bin/ollama serve
+## Run TinyLLaMA
+- ollama run tinyllama
+
+---
+
 ## 🦙 What is TinyLLaMA?
 
 TinyLLaMA is a compact, efficient large language model designed to run locally with minimal resource requirements. It’s ideal for personal and offline AI use cases.
@@ -31,14 +42,7 @@ TinyLLaMA is a compact, efficient large language model designed to run locally w
 - Vocabulary Size: ~32,000 tokens
 - Precision: Most models are released in quantized formats like Q4_0 for fast inference with smaller memory footprint
 
-## 🚀 How to Install TinyLLaMA using OLLAMA
-- brew install ollama
-## To start ollama:
-- brew services start ollama
-## Or, if you don't want/need a background service you can just run:
-- /opt/homebrew/opt/ollama/bin/ollama serve
-## Run TinyLLaMA
-- ollama run tinyllama
+---
 
 ## What is Server-Sent Events (SSE)?
 
