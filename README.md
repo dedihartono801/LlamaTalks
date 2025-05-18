@@ -37,6 +37,7 @@ TinyLLaMA is a compact, efficient large language model designed to run locally w
 - brew services start ollama
 ## Or, if you don't want/need a background service you can just run:
 - /opt/homebrew/opt/ollama/bin/ollama serve
+## Run TinyLLaMA
 - ollama run tinyllama
 
 ## What is Server-Sent Events (SSE)?
