@@ -2,7 +2,7 @@
 
 ## Architecture Diagram
 
-![alt text](https://github.com/dedihartono801/LlamaTalks/blob/master/simple-architecture-AI-BE.png.png)
+![alt text](https://github.com/dedihartono801/LlamaTalks/blob/master/simple-architecture-AI-BE.png)
 
 
 # 🦙 tinyllama-stream-chat
