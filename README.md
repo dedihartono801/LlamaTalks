@@ -16,7 +16,7 @@ This repository demonstrates a full integration of a simple AI chatbot using:
 ---
 
 ## 🚀 How to Install TinyLLaMA using OLLAMA
-- brew install ollama 
+- `brew install ollama`
 *(Note: If you are not a macOS user, please find out for yourself how to install it on another OS hehe)*
 ## To start ollama:
 - brew services start ollama
