@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>TinyLLaMA Chat</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    #chat-box {
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 1rem;
+      height: 400px;
+      overflow-y: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .message {
+      margin: 0.5rem 0;
+      max-width: 90%;
+      padding: 0.7rem 1rem;
+      border-radius: 12px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .user {
+      align-self: flex-end;
+      background-color: #e6f0ff;
+      color: #003366;
+      text-align: right;
+      margin-left: auto;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background-color: #e9fbe7;
+      color: #0b3d0b;
+      margin-right: auto;
+    }
+
+    #chat-form {
+      display: flex;
+      margin-top: 1rem;
+    }
+
+    #prompt {
+      flex: 1;
+      padding: 0.6rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      margin-left: 0.5rem;
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #chat-box-container {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+  <h1>TinyLLaMA Chat</h1>
+
+  <div id="chat-box-container">
+    <div id="chat-box"></div>
+
+    <form id="chat-form">
+      <input type="text" id="prompt" placeholder="Tulis pertanyaan..." required>
+      <button type="submit">Kirim</button>
+    </form>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chat-box");
+    const form = document.getElementById("chat-form");
+    const promptInput = document.getElementById("prompt");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const prompt = promptInput.value.trim();
+      if (!prompt) return;
+
+      // Tampilkan pertanyaan user
+      const userDiv = document.createElement("div");
+      userDiv.className = "message user";
+      userDiv.textContent = prompt;
+      chatBox.appendChild(userDiv);
+
+      // Tampilkan placeholder jawaban bot
+      const botDiv = document.createElement("div");
+      botDiv.className = "message bot";
+      const botSpan = document.createElement("span");
+      botDiv.appendChild(botSpan);
+      chatBox.appendChild(botDiv);
+
+      promptInput.value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+
+      const response = await fetch("http://localhost:8080/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt }),
+        });
+
+        if (!response.ok || !response.body) {
+            console.error("Streaming failed");
+            return;
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+
+        let buffer = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+      
+      const lines = buffer.split("\n");
+      
+      // simpan sisa baris terakhir (mungkin tidak lengkap)
+      buffer = lines.pop();
+      let doneStreaming = false;
+      for (const line of lines) {
+        if (line === "data: [DONE]") {
+          console.log("Stream selesai");
+          doneStreaming = true;
+          break;
+        } 
+        
+        if (line.startsWith("data: ")) {
+          const token = line.slice(6);
+          botSpan.innerText += token;
+          chatBox.scrollTop = chatBox.scrollHeight;
+        }
+      }
+
+      if (doneStreaming) break;
+    }
+    });
+  </script>
+</body>
+</html>
