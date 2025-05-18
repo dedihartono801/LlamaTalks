@@ -19,11 +19,11 @@ This repository demonstrates a full integration of a simple AI chatbot using:
 - `brew install ollama`
 *(Note: If you are not a macOS user, please find out for yourself how to install it on another OS hehe)*
 ## To start ollama:
-- brew services start ollama
+- `brew services start ollama`
 ## Or, if you don't want/need a background service you can just run:
-- /opt/homebrew/opt/ollama/bin/ollama serve
+- `/opt/homebrew/opt/ollama/bin/ollama serve`
 ## Run TinyLLaMA
-- ollama run tinyllama
+- `ollama run tinyllama`
 
 ---
 
